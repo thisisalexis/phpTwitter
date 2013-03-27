@@ -1,0 +1,122 @@
+a { color: #060; }
+
+body	{ background: url(src/background.jpg) top left repeat-x #fff; }
+
+#main {  }
+
+	#header	{  }
+		#logo	{}
+			#logo h1	{ margin: 20px 10px 10px; }
+		#navbar	{  }
+			#navbar ul { background: url(src/bg_navbar.jpg) top left repeat #470; float: right; margin: 76px 0 0; padding: 10px 23px; }
+				#navbar ul li {  margin: 0; padding: 0 23px; }
+					#navbar ul li a	{ color: #fff; margin: 0; text-decoration: none; }
+					#navbar ul li a:hover { border-bottom: 1px dotted #fff; }
+		
+	#body	{ background: url(src/bg_body.gif) top right repeat-y; margin-top: 1px; }
+		#intro 	{ }
+			#info-bar	{ background: url(src/bg_info_bar.jpg) top left repeat #690; border-bottom: 1px solid #fff; color: #fff; padding: 10px 0; }
+				#info-bar a { color: #fff; }
+				#info-bar img { border: 2px solid #fff; float: left; }
+				#info-bar .left-info { }
+				#info-bar .right-info { padding: 5px 0; text-align: right; }
+				#info-bar .padder { padding: 0 10px; }
+				#info-bar .username, 
+				#info-bar .tweets { padding: 10px; }
+				#info-bar .username a { font-size: 1.5em; font-weight: bold; text-decoration: none; }
+					#info-bar .username a:hover { color: #ffc; }
+				#info-bar .tweets { font-size: .9em; }
+				
+				#info-bar .following,
+				#info-bar .followers { font-size: .9em; }
+				
+				#info-bar .following a,
+				#info-bar .followers  a { text-decoration: none; }
+				
+				#info-bar .following a:hover,
+				#info-bar .followers  a:hover { border-bottom: 1px dotted #fff; }
+				
+			#status-bar	{ background: url(src/bg_status_bar.jpg) top left repeat-y #eef2dd; padding: 10px 0;}
+			
+				#status-bar .question { color: #060; font-size: 1.3em; font-weight: bold; }
+				#status-bar .characters { margin: 10px 0 0; }
+					#status-bar .characters input { background: none; border: 0px; color: #ccc; margin: 0; padding: 0; }
+				#status-bar .padder { padding: 0 30px; }
+				#status-bar .tweet-text {  }
+				#status-bar .tweet-text textarea { border: 2px solid #01D201; font-size: 1.8em; height: 60px; margin: 0; padding: 2px; }
+				#status-bar .tweet-button input { background: url(src/bg_tweet_input.jpg) top left repeat-x #01D201; border: 2px solid #00D200; color: #fff; font-size: 1.8em; font-weight: bold; height: 68px; margin: 0; }
+					#status-bar .tweet-button input:hover { background: url(src/bg_tweet_input_hover.jpg) top left repeat-x #94FC2C; }
+
+			
+				#status-bar .text-box {}
+					#status-bar .text-box h2 { color: #060; font-size: 2em; font-weight: bold; margin: 15px 0; }
+					#status-bar .text-box p { font-weight: bold; line-height: 2.2em; margin-bottom: 35px;}
+					#status-bar .text-box a { color: #519237; font-size: 1.4em; font-weight: normal; text-decoration: none; }
+						#status-bar .text-box a:hover { border-bottom: 1px dotted #519237; }
+					#status-bar .text-box a.signup { background: url(src/bg_tweet_input.jpg) top left repeat-x #01D201; border: 2px solid #00D200; color: #fff; font-size: 1.8em; font-weight: bold; margin-right: 35px; padding: 10px 25px; text-decoration: none; }
+					#status-bar .text-box a.signup:hover { background: url(src/bg_tweet_input_hover.jpg) top left repeat-x #94FC2C; }
+				
+				#status-bar .login-panel {}
+					#status-bar .login-panel .box { background: none; border-left: 1px solid #fff; margin: 20px 0 0; padding: 20px; }
+						#status-bar .login-panel .box input.user { border: 2px solid #01D201; margin: 0 0 20px; padding: 7px 5px; }
+						#status-bar .login-panel .box label { color: #581; }
+						#status-bar .login-panel .box a { color: #060; text-decoration: none; } 
+							#status-bar .login-panel .box a:hover { border-bottom: 1px dotted #060;}
+						#status-bar .login-panel .box .submit { margin-right: 15px; }
+			
+		#content { padding-bottom: 10px; }
+			.tweet	{ margin-top: 10px; }
+				.tweet .tweet-info { background: #ddd; border-bottom: 1px solid #fff; padding: 10px 0; }
+					.tweet .tweet-info img { border: 2px solid #fff; float: left; margin: 0 10px; }
+					.tweet .tweet-info .username { color: #090; font-weight: bold; margin-right: 5px; }
+						.tweet .tweet-info .username a { text-decoration: none; }
+						.tweet .tweet-info .padder { padding: 5px 0; }
+				.tweet .tweet-details { background: #eee; padding: 3px 0; }
+					.tweet .tweet-details .date { color: #666; font-size: .8em; padding-left: 10px;}
+					.tweet .tweet-details .options { float: right; }
+			.more { background: #ebebeb; border-bottom: 3px dotted #ccc; border-top: 3px dotted #ccc; margin-top: 10px; padding: 10px 0; text-align: center; }
+				.more a { display: block; font-size: 2em; font-weight: bold; text-decoration: none; }
+			
+			fieldset { background: url(src/bg_status_bar.jpg) top left repeat-y #eef2dd; border: 0;  margin: 10px 0 0; }
+			input.text,
+			input.title,
+			textarea { border: 2px solid #01D201; }
+			label { color: #581; }
+				
+		#sidebar 	{ background-color: #eef2dd; border-top: 1px solid #fff; padding-bottom: 10px; }
+			#sidebar ul.sidenav { margin: 0; padding: 0; }
+				#sidebar ul.sidenav li { background: none; border-bottom: 1px solid #fff; margin: 0; padding: 10px 35px; }
+				#sidebar ul.sidenav li.active a:hover { background: none; }
+					#sidebar ul.sidenav li a	{ color: #060; padding: 0; text-decoration: none; }
+					#sidebar ul.sidenav li a:hover { border-bottom: 1px dotted #060; }
+					
+					#sidebar ul.sidenav li.home { background: url(icons/house.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.replies { background: url(icons/reply.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.comments { background: url(icons/comment.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.retweets { background: url(icons/arrow-retweet.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.favorites { background: url(icons/favorite.png) 10px 10px no-repeat; }	
+					#sidebar ul.sidenav li.search { background: url(icons/find.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.tweets { background: url(icons/balloon.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.signup { background: url(icons/user--plus.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.users { background: url(icons/group.png) 10px 10px no-repeat; }
+					#sidebar ul.sidenav li.profile { background: url(icons/user.png) 10px 10px no-repeat; }
+
+				#sidebar ul.sidenav li.active  { background-color: #C8E0B4; }
+				
+				
+	#footer	{ color: #4C4C4C; border-top: 2px solid #690; font-size: .9em; margin-top: 1px; }
+		.left	{ padding: 15px 0; }
+		.right	{ padding: 15px 0; text-align: left; }
+			.right ul { float: right; }
+				.right ul li	{  }
+					.right ul li.active a	{ border-bottom: 1px dotted #060; }
+					.right ul li a{ text-decoration: none; }
+						.right ul li a:hover{ background-color: #060; color: #fff; }
+
+
+
+
+						.submit { background: url(src/bg_tweet_input.jpg) top left repeat-x #01D201; border: 2px solid #00D200; color: #fff; font-weight: bold; margin: 0; padding: 5px 25px; }
+						.submit:hover { background: url(src/bg_tweet_input_hover.jpg) top left repeat-x #94FC2C; }
+
+
