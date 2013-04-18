@@ -53,17 +53,23 @@
 						break;
 				}
 			}
-			$this->_id = $this->_data["id"];
-			$this->_username = $this->_data["username"];
-			$this->_firstname = $this->_data["firstname"];
-			$this->_lastname = $this->_data["lastname"];
-			$this->_email = $this->_data["email"];
-			$this->_password = $this->_data["password"];
-			$this->_hashedPassword = $this->_data["hashed_password"];
-			$this->_country = $this->_data["country_id"];
-			$this->_bio = $this->_data["bio"];
-			$this->_birthdate= $this->_data["bithdate"];
-			$this->_created = $this->_data["created"];
+
+			if ( array_key_exists("id", $row)){
+				$this->setId($this->_data["id"]);
+			}
+			$this->setUsername($this->_data["username"]);
+			$this->setFirstname($this->_data["firstname"]);
+			$this->setLastname($this->_data["lastname"]);
+			$this->setEmail($this->_data["email"]);
+			$this->setPassword($this->_data["password"]);
+			$this->setHashedPassword($this->_data["hashed_password"]);
+			$this->setCountry($this->_data["country_id"]);
+			$this->setBio($this->_data["bio"]);
+			$this->setBirthdate($this->_data["bithdate"]);
+			if ( array_key_exists("created", $row)){
+				$this->_created = $this->_data["created"];
+			}
+
 		}
 		
 		// Set & Get Methods
@@ -88,7 +94,11 @@
 		}
 		
 		public function setFirstname($firstname){
+
 			$this->_firstname = $firstname;
+
+			/* testing a set method
+			$this->_firstname = strtoupper($firstname); */
 		}
 				
 		public function getLastname(){
@@ -96,7 +106,7 @@
 		}
 		
 		public function setLastname($lastname){
-			$this->lastname = $lastname;
+			$this->_lastname = $lastname;
 		}
 		
 		public function getEmail(){
@@ -120,7 +130,7 @@
 		}
 		
 		public function setHashedPassword($hashedPassword){
-			$this->_hashedPassword = hashedPassword;
+			$this->_hashedPassword = $hashedPassword;
 		}
 		public function getCountry(){
 			return $this->_country;
@@ -152,6 +162,66 @@
 		
 		// Methods
 		public static function singUp($username, $firstname, $lastname, $email, $password, $country,$bio, $birthdate){
+
+			$row = array ();
+
+			$row["username"] = $username;
+			$row["firstname"] = $firstname;
+			$row["lastname"] = $lastname;
+			$row["email"] = $email;
+			$row["password"] = $password;
+			$row["hashed_password"] = $password;
+			$row["country_id"] = $country;
+			$row["bio"] = $bio;
+			$row["bithdate"] = $birthdate;
+		
+			$user = New User ($row); 
+			
+
+			$user->save();
+		}
+
+		public function save(){
+			$conn = Data::connect();
+			$sql = "INSERT INTO users (
+				username,
+				firstname,
+				lastname,
+				email,
+				password,
+				hashed_password,
+				country_id,
+				bio, 
+				bithdate
+				) VALUES (
+				:username,
+				:firstname,
+				:lastname,
+				:email,
+				:password,
+				:hashedPassword,
+				:country,
+				:bio,
+				:bithdate
+				)";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":username", $this->_username, PDO::PARAM_STR);
+				$st->bindValue(":firstname", $this->_firstname, PDO::PARAM_STR);
+				$st->bindValue(":lastname", $this->_lastname, PDO::PARAM_STR);
+				$st->bindValue(":email", $this->_email, PDO::PARAM_STR);
+				$st->bindValue(":password", $this->_password, PDO::PARAM_STR);
+				$st->bindValue(":hashedPassword", $this->_hashedPassword, PDO::PARAM_STR);
+				$st->bindValue(":country", $this->_country, PDO::PARAM_INT);
+				$st->bindValue(":bio", $this->_bio, PDO::PARAM_STR);
+				$st->bindValue(":bithdate", $this->_birthdate, PDO::PARAM_STR);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e){
+				Data::disconnect();
+				die ("Query failed " .$e->getMessage());
+			}
 		}
 
 		public static function login ($username, $password){
@@ -167,7 +237,8 @@
 			$conn = Data::connect();
 			$sql = "SELECT * FROM users WHERE id = :id";
 			try{
-				$st=$conn->prepares($sql);
+				$st=$conn->prepare($sql);
+				$st->bindValue(":id", $id, PDO::PARAM_INT);
 				$st->execute();
 				$row = $st->fetch();
 				Data::disconnect();
@@ -176,7 +247,25 @@
 				}
 			} catch (PDOException $e) {
 				Data::disconnect();
-				die("Query failed: " . $e->Message());
+				die("Query failed: " . $e->getMessage());
+			}
+		}
+
+		public static function getUsersbyUsername ($username){
+			$conn= Data::connect();
+			$sql= "SELECT * FROM users WHERE username = :username";
+			try{
+				$st=$conn->prepare($sql);
+				$st->bindValue(":username", $username, PDO::PARAM_STR);
+				$st->execute();
+				$row = $st->fetch();
+				Data::disconnect();
+				if($row){
+					return new User($row);
+				}
+			} catch(PDOException $e){
+				Data::disconnect();
+				die("Query failed: " . $e->getMessage());
 			}
 		}
 
@@ -194,12 +283,13 @@
 				return $users;
 			} catch (PDOException $e) {
 				Data::disconnect();
-				die("Query failed: " . $e->Message());
+				die("Query failed: " . $e->getMessage());
 			}
 		}
-
-		public static function getUsersbyUsername (){
-		}
-	
 	}
+
+	/* TEST ONLY
+	User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "");
+	echo print_r(User::getUsers());
+	*/
 ?>
