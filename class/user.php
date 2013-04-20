@@ -20,54 +20,49 @@
 				switch ($key){
 					case "id":
 						$this->_data["id"] = $value;
+						$this->setId($this->_data["id"]);
 						break;
 					case "username":
 						$this->_data["username"] = $value;
+						$this->setUsername($this->_data["username"]);
 						break;
 					case "firstname":
 						$this->_data["firstname"] = $value;
+						$this->setFirstname($this->_data["firstname"]);
 						break;
 					case "lastname":
 						$this->_data["lastname"] = $value;
+						$this->setLastname($this->_data["lastname"]);
 						break;
 					case "email":
 						$this->_data["email"] = $value;
+						$this->setEmail($this->_data["email"]);
 						break;
 					case "password":
 						$this->_data["password"] = $value;
+						$this->setPassword($this->_data["password"]);
 						break;
 					case "hashed_password":
 						$this->_data["hashed_password"] = $value;
+						$this->setHashedPassword($this->_data["hashed_password"]);
 						break;
 					case "country_id":
 						$this->_data["country_id"] = $value;
+						$this->setCountry($this->_data["country_id"]);
 						break;
 					case "bio":
 						$this->_data["bio"] = $value;
+						$this->setBio($this->_data["bio"]);
 						break;
 					case "bithdate":
 						$this->_data["bithdate"] = $value;
+						$this->setBirthdate($this->_data["bithdate"]);
 						break;
 					case "created":
 						$this->_data["created"] = $value;
+						$this->_created = $this->_data["created"];
 						break;
 				}
-			}
-
-			if ( array_key_exists("id", $row)){
-				$this->setId($this->_data["id"]);
-			}
-			$this->setUsername($this->_data["username"]);
-			$this->setFirstname($this->_data["firstname"]);
-			$this->setLastname($this->_data["lastname"]);
-			$this->setEmail($this->_data["email"]);
-			$this->setPassword($this->_data["password"]);
-			$this->setHashedPassword($this->_data["hashed_password"]);
-			$this->setCountry($this->_data["country_id"]);
-			$this->setBio($this->_data["bio"]);
-			$this->setBirthdate($this->_data["bithdate"]);
-			if ( array_key_exists("created", $row)){
-				$this->_created = $this->_data["created"];
 			}
 
 		}
@@ -223,9 +218,7 @@
 				die ("Query failed " .$e->getMessage());
 			}
 		}
-
-		public static function login ($username, $password){
-		}
+	
 
 		public function logout(){
 		}
@@ -288,8 +281,9 @@
 		}
 	}
 
-	/* TEST ONLY
-	User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "");
-	echo print_r(User::getUsers());
-	*/
+	
+	/*User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", ""); */
+	echo print_r(User::login("yeya", "5455"));
+	//echo print_r(User::getUsers());
+	
 ?>
