@@ -224,10 +224,34 @@
 			}
 		}
 
-		public static function login ($username, $password){
-		}
+		public function login($username, $password){
+			$conn = Data::connect();
+			$sql = "SELECT * FROM users WHERE username = :username AND password = password(:password)";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":username", $username PDO::PARAM_STR);
+				$st->bindValue(":password", $this->_password, PDO::PARAM_STR);
+				$st->execute();
+				$row = $st->fetch();
+				Data::disconnect();
+				if ($row){
+					$user = new User ($row);
+					$_SESSION["user"] = $row;
+				} else{
+					header('"location: login.php?username=' . $username  . '"');
+					$username = $_GET['username'];
+				}
+			} catch (PDOException $e) {
+					Data::disconnect();
+					die("Query failed " . $e->getMessage());
+				}
+
+		} 
 
 		public function logout(){
+			$_SESSION ["user"] = "";
+			header ("location : login.php");
 		}
 
 		public function updateInfo(){
