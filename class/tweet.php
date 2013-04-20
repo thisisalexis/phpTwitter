@@ -1,5 +1,7 @@
 <?php
-	class Tweet{
+	require_once "data_object.php";
+
+	class Tweet extends DataObject {
 		//ORM Attributes
 		private $_id;
 		private $_user;
@@ -11,7 +13,7 @@
 		private $_limit = 20; //Default tweets per page
 
 		//Constructor
-		__construct(User $user, $text, Tweet $tweet = null){
+		function __construct(User $user, $text, Tweet $tweet = null){
 
 		}
 
@@ -55,21 +57,38 @@
 		}
 
 		//static methods
+		private static function findTweets($conditions) {
+			$this->_connect();
+			try{
+				$st = $this->_conn->prepare("SELECT * FROM tweets");
+				$st->execute();
+
+			} catch( PDOException $e ) {
+				die("Query Failed: " . $e->getMessage() );
+			}
+		}
+
 		public static function getTweetById($id){
-			tweet = new Tweet;
-
-			return tweet;
+			$tweet = new Tweet;
+			
+			
+			
+			return $tweet;
 		}
 
-		public static function getTweetsByUserId($userId, $from = 0, $limit = $this->_limit){
-			tweets = new Tweet[];
-			return tweets;
+		public static function getTweetsByUserId($userId, $from = 0, $limit = PAGE_SIZE){
+			$tweets = array();
+			return $tweets;
 		}
 
-		public static function getTimeLineByUser($UserId, $from = 0, limit = $this->_limit){
-			tweets = new Tweet[];
-			return tweets;
+		public static function getTimeLineByUser($UserId, $from = 0, $limit = PAGE_SIZE){
+			$tweets = array();
+			return $tweets;
 		}
+
+
+
+
 
 	}
 ?>
