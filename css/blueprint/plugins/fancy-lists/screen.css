@@ -1,0 +1,32 @@
+/*
+ * fancy-list Plugin
+ * 
+ * Codes from:		http://css.maxdesign.com.au/listamatic/horizontal16.htm
+ * 
+ * @version: v1.0
+ * @author: Alexis J. Bravo Ll
+ * */
+ 
+
+ul.basic-list							{list-style: none; margin-left: 1em; padding-left: 0;}
+	ul.basic-list li						{ background: url(icons/square.gif) .4em .6em no-repeat; margin-bottom: 10px; padding: .05em; padding-left:25px; }
+
+	
+ul.basic-horizontal-list 					{ /*float: left; Impide colocar bg al ul */ margin:0;}
+	ul.basic-horizontal-list li			{ display: inline; /*float: left;*/ /* OBLIGATORIO para Firefox */ list-style-type: none; padding:0; padding-right: 15px; }
+	ul.basic-horizontal-list li.last		{ padding-right: 0; }
+	
+ul.horizontal-navbar						{ margin:0; padding: 2px 0; float: left; }
+	ul.horizontal-navbar li				{ display: inline; float: left; /* OBLIGATORIO para Firefox 2 */ list-style-type: none; padding:2px 25px;  }
+	ul.horizontal-navbar li a				{ text-decoration: none; }
+
+
+ul.separated-nav-list 					{ list-style: none; margin-left: 0; padding-left: 0; }
+	ul.separated-nav-list li				{ background: url(icons/circle.gif) .4em .8em no-repeat; border-bottom: 1px solid silver; }
+	ul.separated-nav-list li a 				{ display:block; padding: 0.25em; padding-left: 15px; text-decoration: none; }
+		ul.separated-nav-list li a:hover	{ background: url(icons/square.gif) .4em .8em no-repeat #f9f9f9; }
+		
+		
+ul li.active,
+ul li.active a 								{ font-weight:bold; }
+
