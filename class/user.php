@@ -218,9 +218,36 @@
 				die ("Query failed " .$e->getMessage());
 			}
 		}
-	
+
+
+		public function login($username, $password){
+			$conn = Data::connect();
+			$sql = "SELECT * FROM users WHERE username = :username AND password = password(:password)";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":username", $username PDO::PARAM_STR);
+				$st->bindValue(":password", $password, PDO::PARAM_STR);
+				$st->execute();
+				$row = $st->fetch();
+				Data::disconnect();
+				if ($row){
+					$user = new User ($row);
+					$_SESSION["user"] = $row;
+				} else{
+					header('"location: login.php?username=' . $username  . '"');
+					$username = $_GET['username'];
+				}
+			} catch (PDOException $e) {
+					Data::disconnect();
+					die("Query failed " . $e->getMessage());
+				}
+
+		} 
 
 		public function logout(){
+			$_SESSION ["user"] = "";
+			header ("location : login.php");
 		}
 
 		public function updateInfo(){
@@ -282,8 +309,10 @@
 	}
 
 	
-	/*User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", ""); */
-	echo print_r(User::login("yeya", "5455"));
-	//echo print_r(User::getUsers());
+	/* Test only
+	
+	User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", ""); 
+	
+	echo print_r(User::getUsers()); */
 	
 ?>
