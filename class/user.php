@@ -226,7 +226,7 @@
 
 			try{
 				$st = $conn->prepare($sql);
-				$st->bindValue(":username", $username PDO::PARAM_STR);
+				$st->bindValue(":username", $username, PDO::PARAM_STR);
 				$st->bindValue(":password", $password, PDO::PARAM_STR);
 				$st->execute();
 				$row = $st->fetch();
@@ -250,10 +250,67 @@
 			header ("location : login.php");
 		}
 
-		public function updateInfo(){
+		public function updateInfo($id, $username, $firstname, $lastname, $email, $password, $country, $bio, $birthdate){
+
+			$row = array ();
+
+			$row["id"] = $id;
+			$row["username"] = $username;
+			$row["firstname"] = $firstname;
+			$row["lastname"] = $lastname;
+			$row["email"] = $email;
+			$row["password"] = $password;
+			$row["country_id"] = $country;
+			$row["bio"] = $bio;
+			$row["bithdate"] = $birthdate;
+			
+			$user = new User ($row);
+			
+			if(self::getUserById($user->getId())){
+				$user->update();
+			} 
+
 		}
 
-		public function getUserById($id){
+		public function update () {
+
+			$conn = Data::connect();
+			$password = $this->_password ? "password = password(:password)," : "";
+
+			$sql = "UPDATE users SET 
+				username = :username,
+				firstname = :firstname,
+				lastname = :lastname,
+				email = :email,
+				$password
+				country_id = :country_id,
+				bio = :bio,
+				bithdate = :bithdate
+			WHERE id = :id";
+
+			try {
+				$st = $conn->prepare($sql);
+				$st->bindValue(":id", $this->_id, PDO::PARAM_INT);
+				$st->bindValue(":username", $this->_username, PDO::PARAM_STR);
+				$st->bindValue(":firstname", $this->_firstname, PDO::PARAM_STR);
+				$st->bindValue(":lastname", $this->_lastname, PDO::PARAM_STR);
+				$st->bindValue(":email", $this->_email, PDO::PARAM_STR);
+				if ($this->_password =! ""){
+					$st->bindValue(":password", $this->_password, PDO::PARAM_STR);
+				}
+				$st->bindValue(":country_id", $this->_country, PDO::PARAM_INT);
+				$st->bindValue(":bio", $this->_bio, PDO::PARAM_STR);
+				$st->bindValue(":bithdate", $this->_birthdate, PDO::PARAM_STR);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e) {
+				Data::disconnect();
+				die ("Query failed" . $e->getMessage() );
+			}
+
+		}
+
+		public static function getUserById($id){
 			$conn = Data::connect();
 			$sql = "SELECT * FROM users WHERE id = :id";
 			try{
@@ -309,10 +366,17 @@
 	}
 
 	
-	/* Test only
+	/* Test Only
+
+	User::signUp("giovi18", "Giovanna", "Russo", "russopgiovanna@gmail.com", "123456", 1, "Te voy a matar. Pronto.", ""); 
+
+	User::updateInfo(2, "pedro88", "pupu", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "fg"); 
+
+	echo print_r(getUsers());
 	
-	User::singUp( "pedro77", "Pedro", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", ""); 
+	*/
+
 	
-	echo print_r(User::getUsers()); */
+	
 	
 ?>
