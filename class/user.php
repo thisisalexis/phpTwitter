@@ -1,5 +1,6 @@
 <?php
 	require_once("data.php");
+
 	class User{
 		//Atributtes
 		protected $_id;
@@ -19,48 +20,47 @@
 			foreach ($row as $key => $value){
 				switch ($key){
 					case "id":
-						$this->_data["id"] = $value;
-						$this->setId($this->_data["id"]);
+						$this->_id = $value;
+						$this->setId($this->_id);
 						break;
 					case "username":
-						$this->_data["username"] = $value;
-						$this->setUsername($this->_data["username"]);
+						$this->_username = $value;
+						$this->setUsername($this->_username);
 						break;
 					case "firstname":
-						$this->_data["firstname"] = $value;
-						$this->setFirstname($this->_data["firstname"]);
+						$this->_firstname = $value;
+						$this->setFirstname($this->_firstname);
 						break;
 					case "lastname":
-						$this->_data["lastname"] = $value;
-						$this->setLastname($this->_data["lastname"]);
+						$this->_lastname = $value;
+						$this->setLastname($this->_lastname);
 						break;
 					case "email":
-						$this->_data["email"] = $value;
-						$this->setEmail($this->_data["email"]);
+						$this->_email = $value;
+						$this->setEmail($this->_email);
 						break;
 					case "password":
-						$this->_data["password"] = $value;
-						$this->setPassword($this->_data["password"]);
+						$this->_password = $value;
+						$this->setPassword($this->_password);
 						break;
 					case "hashed_password":
-						$this->_data["hashed_password"] = $value;
-						$this->setHashedPassword($this->_data["hashed_password"]);
+						$this->_hashedPassword = $value;
+						$this->setHashedPassword($this->_hashedPassword);
 						break;
 					case "country_id":
-						$this->_data["country_id"] = $value;
-						$this->setCountry($this->_data["country_id"]);
+						$this->_country = $value;
+						$this->setCountry($this->_country);
 						break;
 					case "bio":
-						$this->_data["bio"] = $value;
-						$this->setBio($this->_data["bio"]);
+						$this->_bio = $value;
+						$this->setBio($this->_bio);
 						break;
 					case "bithdate":
-						$this->_data["bithdate"] = $value;
-						$this->setBirthdate($this->_data["bithdate"]);
+						$this->_birthdate = $value;
+						$this->setBirthdate($this->_birthdate);
 						break;
 					case "created":
-						$this->_data["created"] = $value;
-						$this->_created = $this->_data["created"];
+						$this->_created = $value;
 						break;
 				}
 			}
@@ -351,7 +351,7 @@
 	User::signUp("giovi18", "Giovanna", "Russo", "russopgiovanna@gmail.com", "123456", 1, "Te voy a matar. Pronto.", ""); 
 	
 	// get user method
-	echo print_r(getUsers());
+	echo print_r(User::getUsers());
 	
 	
 	// testing update method
@@ -361,6 +361,8 @@
 
 	*/
 	
+		echo print_r(User::getUsers());
+
 	
 	
 ?>
