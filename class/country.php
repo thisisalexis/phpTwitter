@@ -61,6 +61,41 @@
 	
 		// Methods 
 
+		public static function create($name, $description){
+
+			$row = array ();
+
+			$row["name"] = $name;
+			$row["description"] = $description;
+	
+		
+			$country = New Country ($row); 
+			
+
+			$country->save();
+		}
+
+		public function save(){
+			$conn = Data::connect();
+			$sql = "INSERT INTO countries (
+				name,
+				description
+				) VALUES (
+				:name,
+				:description
+				)";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":name", $this->_name, PDO::PARAM_STR);
+				$st->bindValue(":description", $this->_description, PDO::PARAM_STR);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e){
+				Data::disconnect();
+				die ("Query failed " .$e->getMessage());
+			}
+		}
 		public function update ($name, $description) {
 
 			$conn = Data::connect();
@@ -121,16 +156,19 @@
 	}
 
 	/* TEST ONLY
-	//Update a country
-
+	
+	//Update country
 	$country = Country::getCountryById(1);
 	$country->update("venezuela", "Es un país genial");
 	
-	//Show countries
+	// Create Country 
+	Country::create("México", "prueba");
 
+	//Show countries
 	print_r(Country::getCountries());
 	
 	*/
 
+	
 	
 ?>
