@@ -61,6 +61,28 @@
 	
 		// Methods 
 
+		public function update ($name, $description) {
+
+			$conn = Data::connect();
+
+			$sql = "UPDATE countries SET 
+				name = :name,
+				description = :description
+			WHERE id = :id";
+
+			try {
+				$st = $conn->prepare($sql);
+				$st->bindValue(":id", $this->_id, PDO::PARAM_INT);
+				$st->bindValue(":name", $name, PDO::PARAM_STR);
+				$st->bindValue(":description", $description, PDO::PARAM_STR);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e) {
+				Data::disconnect();
+				die ("Query failed" . $e->getMessage() );
+			}
+		}
+
 		public static function getCountries(){
 			$conn = Data::connect();
 			$sql = "SELECT * FROM countries";
@@ -78,8 +100,37 @@
 				die("Query failed: " . $e->getMessage());
 			}
 		}
+
+		public static function getCountryById($id){
+			$conn = Data::connect();
+			$sql = "SELECT * FROM countries WHERE id = :id";
+			try{
+				$st=$conn->prepare($sql);
+				$st->bindValue(":id", $id, PDO::PARAM_INT);
+				$st->execute();
+				$row = $st->fetch();
+				Data::disconnect();
+				if ($row){
+					return new Country($row);
+				}
+			} catch (PDOException $e) {
+				Data::disconnect();
+				die("Query failed: " . $e->getMessage());
+			}
+		}
 	}
 
-	echo print_r(Country::getCountries());
+	/* TEST ONLY
+	//Update a country
 
+	$country = Country::getCountryById(1);
+	$country->update("venezuela", "Es un país genial");
+	
+	//Show countries
+
+	print_r(Country::getCountries());
+	
+	*/
+
+	
 ?>
