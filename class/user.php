@@ -1,6 +1,6 @@
 <?php
 	require_once("data.php");
-
+	require_once("country.php");
 	class User{
 		//Atributtes
 		protected $_id;
@@ -10,6 +10,7 @@
 		protected $_lastname;
 		protected $_password;
 		protected $_hashedPassword;
+		protected $_idCountry;
 		protected $_country;
 		protected $_bio;
 		protected $_birthdate;
@@ -48,8 +49,8 @@
 						$this->setHashedPassword($this->_hashedPassword);
 						break;
 					case "country_id":
-						$this->_country = $value;
-						$this->setCountry($this->_country);
+						$this->_idCountry = $value;
+						$this->setIdCountry($this->_idCountry);
 						break;
 					case "bio":
 						$this->_bio = $value;
@@ -63,7 +64,17 @@
 						$this->_created = $value;
 						break;
 				}
+				 
 			}
+
+			
+			
+			if($coun = Country::getCountryById($this->_idCountry)){
+
+				$this->_country = $coun;
+			
+			}
+			
 
 		}
 		
@@ -127,12 +138,21 @@
 		public function setHashedPassword($hashedPassword){
 			$this->_hashedPassword = $hashedPassword;
 		}
+		public function getIdCountry(){
+			return $this->_idCountry;
+		}
+		
+		public function setIdCountry($idcountry){
+			$this->_idCountry = $idcountry;
+		}
+
 		public function getCountry(){
 			return $this->_country;
 		}
 		
 		public function setCountry($country){
 			$this->_country = $country;
+			
 		}
 		
 		public function getBio(){
@@ -348,9 +368,9 @@
 	/* TEST ONLY
 	
 	// signUp
-	User::signUp("giovi18", "Giovanna", "Russo", "russopgiovanna@gmail.com", "123456", 1, "Te voy a matar. Pronto.", ""); 
+	User::signUp("giovi18", "Giovanna", "Russo", "russopgiovanna@gmail.com", "123456", 1, "Probando.", ""); 
 	
-	// get user method
+	// Show user
 	echo print_r(User::getUsers());
 	
 	
@@ -360,9 +380,5 @@
 	$user->update("juanito", "pupu", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "fg");
 
 	*/
-	
-		echo print_r(User::getUsers());
-
-	
 	
 ?>
