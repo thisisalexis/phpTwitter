@@ -153,6 +153,22 @@
 				die("Query failed: " . $e->getMessage());
 			}
 		}
+
+		public static function delete($id){
+			$conn = Data::connect();
+			$sql = "DELETE FROM countries WHERE id = :id";
+			try{
+				$st=$conn->prepare($sql);
+				$st->bindValue(":id", $id, PDO::PARAM_INT);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e) {
+				Data::disconnect();
+				die("Query failed: " . $e->getMessage());
+			}
+		}
+
+
 	}
 
 	/* TEST ONLY
@@ -167,8 +183,9 @@
 	//Show countries
 	print_r(Country::getCountries());
 	
-	*/
+	// Delete Country
+	Country::delete(3);
 
-	
+	*/
 	
 ?>
