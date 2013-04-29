@@ -21,61 +21,44 @@
 			foreach ($row as $key => $value){
 				switch ($key){
 					case "id":
-						$this->_id = $value;
-						$this->setId($this->_id);
+						$this->setId($value);
 						break;
 					case "username":
-						$this->_username = $value;
-						$this->setUsername($this->_username);
+						$this->setUsername($value);
 						break;
 					case "firstname":
-						$this->_firstname = $value;
-						$this->setFirstname($this->_firstname);
+						$this->setFirstname($value);
 						break;
 					case "lastname":
-						$this->_lastname = $value;
-						$this->setLastname($this->_lastname);
+						$this->setLastname($value);
 						break;
 					case "email":
-						$this->_email = $value;
-						$this->setEmail($this->_email);
+						$this->setEmail($value);
 						break;
 					case "password":
-						$this->_password = $value;
-						$this->setPassword($this->_password);
+						$this->setPassword($value);
 						break;
 					case "hashed_password":
-						$this->_hashedPassword = $value;
-						$this->setHashedPassword($this->_hashedPassword);
+						$this->setHashedPassword($value);
 						break;
 					case "country_id":
-						$this->_idCountry = $value;
-						$this->setIdCountry($this->_idCountry);
+						$this->setIdCountry($value);
 						break;
 					case "bio":
-						$this->_bio = $value;
-						$this->setBio($this->_bio);
+						$this->setBio($value);
 						break;
 					case "bithdate":
-						$this->_birthdate = $value;
-						$this->setBirthdate($this->_birthdate);
+						$this->setBirthdate($value);
 						break;
 					case "created":
 						$this->_created = $value;
 						break;
-				}
-				 
-			}
-
-			
-			
-			if($coun = Country::getCountryById($this->_idCountry)){
-
-				$this->_country = $coun;
-			
+				} 
 			}
 			
-
+			if($country = Country::getCountryById($this->_idCountry)){
+				$this->setCountry($country);
+			}
 		}
 		
 		// Set & Get Methods
@@ -150,7 +133,7 @@
 			return $this->_country;
 		}
 		
-		public function setCountry($country){
+		public function setCountry( Country $country){
 			$this->_country = $country;
 			
 		}
@@ -380,5 +363,7 @@
 	$user->update("juanito", "pupu", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "fg");
 
 	*/
+
+	
 	
 ?>
