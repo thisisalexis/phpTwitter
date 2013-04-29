@@ -12,6 +12,7 @@
 		protected $_sender;
 		protected $_recipient;
 		protected $_messageId;
+		protected $_message;
 		protected $_created;
 
 		// Constructor
@@ -19,40 +20,38 @@
 			foreach ($row as $key => $value){
 				switch ($key){
 					case "id":
-						$this->_id = $value;
-						$this->setId($this->_id);
+						$this->setId($value);
 						break;
 					case "text":
-						$this->_text = $value;
-						$this->setText($this->_text);
+						$this->setText($value);
 						break;
 					case "sender_id":
-						$this->_senderId = $value;
-						$this->setSenderId($this->_senderId);
+						$this->setSenderId($value);
 						break;
 					case "recipient_id":
-						$this->_recipientId = $value;
-						$this->setRecipientId($this->_recipientId);
+						$this->setRecipientId($value);
 						break;
 					case "message_id":
-						$this->_messageId = $value;
-						$this->setMessageId($this->_messageId);
+						$this->setMessageId($value);
 						break;
 					case "created":
 						$this->_created = $value;
 						break;
-				}
-				 
+				} 
 			}
 
 			if($sender = User::getUserById($this->_senderId)){
-				$this->_sender = $sender;
+				$this->setSender($sender);
 			}
 			if($recipient = User::getUserById($this->_recipientId)){
-				$this->_recipient = $recipient;
+				$this->setRecipient($recipient);
 			}
 
+			if($message = Message::getMessageById($this->_messageId)){
+				$this->setMessage($message);
+			}
 		}
+		
 	
 		//Set & Get Methods
 		public function getId(){
@@ -110,6 +109,15 @@
 		public function setMessageId($messageId){
 			$this->_messageId = $messageId;
 		}
+
+		public function getMessage(){
+			return $this->_message;
+		}
+		
+		public function setMessage(Message $message){
+			$this->_message = $message;
+		}
+
 
 		public function getCreated(){
 			return $this->_created;
@@ -170,12 +178,11 @@
 				$st = $conn->prepare($sql);
 				$st->bindValue(":id", $id, PDO::PARAM_INT);
 				$st->execute();
-				$message = array ();
-				foreach ($st->fetchAll as $row){
-					$message[]= New Message ($row);
-				}
+				$row = $st->fetch();
 				Data::disconnect();
-				return $message;
+				if($row){
+					return new Message($row);
+				}
 			} catch (PDOException $e){
 				Data::disconnect();
 				die ("Query Failed" . $e->getMessage());
@@ -278,7 +285,7 @@
 	*/
 
 	
-	
+	print_r(Message::getMessages());
 
 	
 ?>
