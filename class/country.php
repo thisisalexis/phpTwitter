@@ -14,25 +14,20 @@
 			foreach ($row as $key => $value){
 				switch ($key){
 					case "id":
-						$this->_id = $value;
-						$this->setId($this->_id);
+						$this->setId($value);
 						break;
 					case "name":
-						$this->_name = $value;
-						$this->setName($this->_name);
+						$this->setName($value);
 						break;
 					case "description":
-						$this->_description = $value;
-						$this->setDescription($this->_description);
+						$this->setDescription($value);
 						break;
 					case "created":
 						$this->_created = $value;
 						break;
 				}
 			}
-
 		}
-		
 
 		//Set & Get Methods
 		public function getId(){
@@ -187,5 +182,5 @@
 	Country::delete(3);
 
 	*/
-	
+
 ?>

@@ -363,7 +363,5 @@
 	$user->update("juanito", "pupu", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "fg");
 
 	*/
-
-	
 	
 ?>
