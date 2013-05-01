@@ -43,6 +43,8 @@
 						break;
 					case "country_id":
 						$this->setIdCountry($value);
+						$country = Country::getCountryById($value);
+						$this->setCountry($country);
 						break;
 					case "bio":
 						$this->setBio($value);
@@ -54,10 +56,6 @@
 						$this->_created = $value;
 						break;
 				} 
-			}
-			
-			if($country = Country::getCountryById($this->_idCountry)){
-				$this->setCountry($country);
 			}
 		}
 		
@@ -363,5 +361,6 @@
 	$user->update("juanito", "pupu", "Perez", "pperez@gmail.com", "123456", 2, "nothing but the beat", "fg");
 
 	*/
+	
 	
 ?>

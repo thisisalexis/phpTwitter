@@ -27,28 +27,24 @@
 						break;
 					case "sender_id":
 						$this->setSenderId($value);
+						$sender = User::getUserById($value);
+						$this->setSender($sender);
 						break;
 					case "recipient_id":
 						$this->setRecipientId($value);
+						$recipient = User::getUserById($value);
+						$this->setRecipient($recipient);
 						break;
 					case "message_id":
 						$this->setMessageId($value);
+						if($message = Message::getMessageById($value)){
+						$this->setMessage($message);
+						}
 						break;
 					case "created":
 						$this->_created = $value;
 						break;
 				} 
-			}
-
-			if($sender = User::getUserById($this->_senderId)){
-				$this->setSender($sender);
-			}
-			if($recipient = User::getUserById($this->_recipientId)){
-				$this->setRecipient($recipient);
-			}
-
-			if($message = Message::getMessageById($this->_messageId)){
-				$this->setMessage($message);
 			}
 		}
 		
