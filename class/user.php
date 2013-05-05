@@ -1,6 +1,8 @@
 <?php
 	require_once("data.php");
 	require_once("country.php");
+	require_once("follow.php");
+
 	class User{
 		//Atributtes
 		protected $_id;
@@ -342,6 +344,14 @@
 				Data::disconnect();
 				die("Query failed: " . $e->getMessage());
 			}
+		}
+
+		public function block($followingId, $followerId){
+			Follow::delete($followingId, $followerId);
+		}
+
+		public function unfollow($followingId, $followerId){
+			Follow::delete($followingId, $followerId);
 		}
 	}
 
