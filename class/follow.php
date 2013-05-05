@@ -84,6 +84,29 @@
 
 		//Methods
 
+		public static function create($followerId, $followingId){
+			$conn = Data::connect();
+			$sql = "INSERT INTO follows (
+				follower_id,
+				following_id
+				) VALUES (
+				:follower,
+				:following
+				)";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":follower", $followerId, PDO::PARAM_INT);
+				$st->bindValue(":following", $followingId, PDO::PARAM_INT);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e){
+				Data::disconnect();
+				die ("Query failed " .$e->getMessage());
+			}
+		}
+
+
 		public static function getFollows(){
 			$conn = Data::connect();
 			$sql = "SELECT * FROM follows";
@@ -103,8 +126,82 @@
 			}
 
 		}
-	
-	}
 
+		public static function getFollowerById($id){
+			$conn = Data::connect();
+			$sql = "SELECT * FROM follows WHERE follower_id = :id";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":id", $id, PDO::PARAM_INT);
+				$st->execute();
+				$followers = array ();
+				foreach ($st->fetchAll() as $row){
+					$followers[] = new Follow($row);
+				}
+				Data::disconnect();
+				return $followers;
+			} catch (PDOException $e){
+				Data::disconnect();
+				die("Query failed:" . $e->getMessage());
+			}
+		}
+
+		public static function getFollowingById($id){
+			$conn = Data::connect();
+			$sql = "SELECT * FROM follows WHERE following_id = :id";
+
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":id", $id, PDO::PARAM_INT);
+				$st->execute();
+				$followings = array ();
+				foreach ($st->fetchAll() as $row){
+					$followings[] = new Follow($row);
+				}
+				Data::disconnect();
+				return $followings;
+			} catch (PDOException $e){
+				Data::disconnect();
+				die("Query failed:" . $e->getMessage());			
+			}
+		}
+
+		public static function delete($followingId, $followerId){
+			$conn = Data::connect();
+			$sql = "DELETE FROM follows WHERE following_id = :followingId
+										AND follower_id = :followerId";
+			try{
+				$st = $conn->prepare($sql);
+				$st->bindValue(":followingId", $followingId, PDO::PARAM_INT);
+				$st->bindValue(":followerId", $followerId, PDO::PARAM_INT);
+				$st->execute();
+				Data::disconnect();
+			} catch (PDOException $e){
+				Data::disconnect();
+				die("Query failed: " .$e->getMessage());
+			}
+		}
+	
+ 	}
+
+ 	/* TEST ONLY
 	print_r(Follow::getFollows());
+
+	Show followers
+	print_r(Follow::getFollowerById(3));
+
+	Show followings
+	print_r(Follow::getFollowingById(5));
+
+	Delete follow
+	Follow::delete(3);
+
+	Delete follow by an user instance 
+	$user = User::getUserById(3);
+	$user->block(3,2);
+
+	*/
+	
 ?>
+
