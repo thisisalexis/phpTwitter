@@ -277,11 +277,7 @@
 
 	//Show Messages by sender
 	print_r(Message::getMessageBySender(3));
-
-	*/
-
 	
-	print_r(Message::getMessages());
-
+	*/
 	
 ?>
